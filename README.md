@@ -1,2 +1,2 @@
-# hospital-app
-Project
+# Hospital App
+- Project build with MEAN Stack
