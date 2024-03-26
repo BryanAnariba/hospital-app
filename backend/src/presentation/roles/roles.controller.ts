@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { RoleService } from "./roles.service";
 import { CustomError } from "../../domain/error/custom.error";
-import { CreateRoleDto, UpdateRoleDto } from "../../domain/dto";
-import { PaginationDto } from "../../domain/dto/pagination/pagination.dto";
+import { CreateRoleDto, PaginationDto, UpdateRoleDto } from "../../domain/dto";
 import { VerifyId } from "../../config";
 
 export class RoleController {

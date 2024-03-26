@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { HospitalsService } from "./hospitals.service";
-import { CreateHospitalDto } from "../../domain/dto";
+import { CreateHospitalDto, PaginationDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { isValidObjectId } from "mongoose";
+
 
 export class HospitalsController {
 
@@ -16,7 +17,17 @@ export class HospitalsController {
   }
 
   public getItems= (req: Request, res: Response) => {
-    return res.status(200).json({data: 'get items works'});
+    const {limit = 10, skip = 1} = req.query;
+    const [error, paginationDto] = PaginationDto.getObjectFromJson({limit: +limit, skip: +skip});
+    if (error) return res.status(400).json({error: error});
+
+    this.hospitalsService.getHospitals(paginationDto!)
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      });
   }
 
   public getItem = (req: Request, res: Response) => {

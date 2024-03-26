@@ -6,6 +6,7 @@ const doctorSchema = new mongoose.Schema(
         type: String,
         required: [true, 'Name is required'],
         trim: true,
+        uppercase: true,
     },
     email: {
         type: String,

@@ -1,6 +1,5 @@
 import { roleModel } from "../../data/models";
-import { CreateRoleDto, UpdateRoleDto } from "../../domain/dto";
-import { PaginationDto } from '../../domain/dto/pagination/pagination.dto';
+import { CreateRoleDto, PaginationDto, UpdateRoleDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 
 export class RoleService {

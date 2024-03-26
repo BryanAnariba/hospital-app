@@ -1,8 +1,6 @@
 import { Bcrypt } from "../../config";
 import { userModel } from "../../data/models";
-import { CreateUserDto } from "../../domain/dto";
-import { PaginationDto } from "../../domain/dto/pagination/pagination.dto";
-import { UpdateUserDto } from "../../domain/dto/users/update-user.dto";
+import { CreateUserDto, PaginationDto, UpdateUserDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { RoleService } from "../roles/roles.service";
 
@@ -34,7 +32,7 @@ export class UserService {
 
   public async getUsers (paginationDto: PaginationDto) {
     const [users, totalUsers] = await Promise.all([
-      userModel.find({isActive: true}, {password: false}).skip((paginationDto.skip - 1) * paginationDto.limit),
+      userModel.find({isActive: true}, {password: false}).skip((paginationDto.skip - 1) * paginationDto.limit).limit(paginationDto.limit),
       userModel.countDocuments({isActive: true}),
     ]);
 

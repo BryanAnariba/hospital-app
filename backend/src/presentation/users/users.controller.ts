@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import { UserService } from "./users.service";
-import { CreateUserDto } from "../../domain/dto";
+import { CreateUserDto, PaginationDto, UpdateUserDto } from "../../domain/dto";
 import { isValidObjectId } from "mongoose";
 import { CustomError } from "../../domain/error/custom.error";
-import { PaginationDto } from "../../domain/dto/pagination/pagination.dto";
-import { UpdateUserDto } from "../../domain/dto/users/update-user.dto";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
