@@ -65,7 +65,7 @@ export class RoleService {
     }
   }
 
-  private async getRoleByName(name: string) {
+  public async getRoleByName(name: string) {
     return await roleModel.findOne({name: {$regex: name}});
   }
 }

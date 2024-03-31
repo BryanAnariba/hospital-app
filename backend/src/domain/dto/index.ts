@@ -5,5 +5,7 @@ export * from './users/update-user.dto';
 export * from './auth/sign-in.dto';
 export * from './auth/sign-up.dto';
 export * from './hospital/create-hospital.dto';
+export * from './hospital/update-hospital.dto';
 export * from './doctor/create-doctor.dto';
+export * from './doctor/update-doctor.dto';
 export * from './pagination/pagination.dto';

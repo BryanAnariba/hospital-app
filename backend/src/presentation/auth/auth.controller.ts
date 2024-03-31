@@ -3,6 +3,7 @@ import { AuthService } from "./auth.service";
 import { SignInDto, SignUpDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { isValidObjectId } from "mongoose";
+import { verifyGoogleSignIn } from "../../config";
 
 export class AuthController {
 
@@ -40,6 +41,41 @@ export class AuthController {
     this.authService.onSignUp(signUpDto!)
       .then(data => {
         return res.status(201).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      })
+  }
+
+  public googleSignIn = (req: Request, res: Response) => { 
+    if (!req.body.token) return res.status(401).json({error: 'Token not provided'});
+
+    verifyGoogleSignIn(req.body.token)
+      .then(payload => {
+        const {email, name, picture} = payload;
+        this.authService.saveGoogleSignIn(email, name, picture)
+          .then(data => {
+            return res.status(201).json(data);
+          })
+          .catch(error => {
+            this.handleError(error, res);
+          });
+      })
+      .catch(error => {
+        return res.status(400).json({error: error});
+      });
+  }
+
+  public verifyAndRefreshToken = (req: Request, res: Response) => { 
+    const {user} = req.body;
+    if (!user) return res.status(401).json({error: 'Invalid Authentication'});
+
+    this.authService.refreshToken(user._id)
+      .then(data => {
+        return res.status(200).json({
+          token: data,
+          user: user,
+        });
       })
       .catch(error => {
         this.handleError(error, res);

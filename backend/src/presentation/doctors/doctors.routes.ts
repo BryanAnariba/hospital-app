@@ -22,10 +22,10 @@ export class DoctorsRoutes {
 
     router
       .get('', [AuthMiddleware.validateJWT], doctorsController.getItems)
-      .get('/:hospitalId', [AuthMiddleware.validateJWT], doctorsController.getItem)
+      .get('/:doctorId', [AuthMiddleware.validateJWT], doctorsController.getItem)
       .post('', [AuthMiddleware.validateJWT], doctorsController.createItem)
-      .put('/:hospitalId', [AuthMiddleware.validateJWT], doctorsController.editItem)
-      .delete('/:hospitalId', [AuthMiddleware.validateJWT], doctorsController.deleteItem);
+      .put('/:doctorId', [AuthMiddleware.validateJWT], doctorsController.editItem)
+      .delete('/:doctorId', [AuthMiddleware.validateJWT], doctorsController.deleteItem);
 
     return router;
   }

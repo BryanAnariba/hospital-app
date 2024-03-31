@@ -9,4 +9,6 @@ export const environmentVars = {
   MONGO_DBNAME: get('MONGO_DBNAME').required().asString(),
   MONGO_URL: get('MONGO_URL').required().asString(),
   JWT_SEED: get('JWT_SEED').required().asString(),
+  GOOGLE_ID: get('GOOGLE_ID').required().asString(),
+  GOOGLE_SECRET: get('GOOGLE_SECRET').required().asString(),
 };

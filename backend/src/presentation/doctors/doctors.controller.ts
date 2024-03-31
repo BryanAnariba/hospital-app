@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DoctorsService } from "./doctors.service";
-import { CreateDoctorDto, PaginationDto } from "../../domain/dto";
+import { CreateDoctorDto, PaginationDto, UpdateDoctorDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { isValidObjectId } from "mongoose";
 
@@ -56,10 +56,37 @@ export class DoctorsController {
   }
 
   public editItem = (req: Request, res: Response) => {
-    return res.status(200).json({data: 'edit Item works'});
+    const {doctorId} = req.params;
+    if (!doctorId) return res.status(400).json({error: 'Doctor Code is required'});
+
+    const isValidDoctorId = isValidObjectId(doctorId);
+    if (!isValidDoctorId) return res.status(400).json({error: 'Invalid Doctor Code'});
+
+    const [error, updateDoctorDto] = UpdateDoctorDto.getObjectFromJson({...req.body, user: req.body.user._id});
+    if (error) return res.status(400).json({error: error});
+
+    this.doctorsService.updateDoctor(doctorId ,updateDoctorDto!)
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      })
   }
 
   public deleteItem = (req: Request, res: Response) => {
-    return res.status(200).json({data: 'delete Item works'});
+    const {doctorId} = req.params;
+    if (!doctorId) return res.status(400).json({error: 'Doctor Code is required'});
+
+    const isValidDoctorId = isValidObjectId(doctorId);
+    if (!isValidDoctorId) return res.status(400).json({error: 'Invalid Doctor Code'});
+
+    this.doctorsService.deleteDoctor(doctorId)
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      });
   }
 }

@@ -1,5 +1,5 @@
 import { hospitalModel } from "../../data/models";
-import { CreateHospitalDto, PaginationDto } from "../../domain/dto";
+import { CreateHospitalDto, PaginationDto, UpdateHospitalDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { UserService } from "../users/users.service";
 
@@ -47,6 +47,30 @@ export class HospitalsService {
       const newHospital = await hospitalModel.create(createHospitalDto);
       return newHospital;
     } catch (error) {
+      throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
+    }
+  }
+
+  public async updateHospital (hospitalId: string, updateHospitalDto: UpdateHospitalDto) {
+    const existsHospital = await this.getHospitalByName(updateHospitalDto.name);
+    if (existsHospital) {
+      if (`${existsHospital._id}` !== hospitalId) throw CustomError.badErrorRequest(`The name of this hospital already exists in other record`);
+    }
+    try {
+      const updated = await hospitalModel.findOneAndUpdate({_id: hospitalId}, updateHospitalDto, {new: true}) ;
+      return updated;
+    } catch (error) {
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
+    }
+  }
+
+  public async deleteHospital (hospitalId: string) {
+    try {
+      const updated = await hospitalModel.findOneAndUpdate({_id: hospitalId}, {isActive: false}, {new: true}) ;
+      return updated;
+    } catch (error) {
+      if (error instanceof CustomError) throw error;
       throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
     }
   }

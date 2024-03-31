@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HospitalsService } from "./hospitals.service";
-import { CreateHospitalDto, PaginationDto } from "../../domain/dto";
+import { CreateHospitalDto, PaginationDto, UpdateHospitalDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { isValidObjectId } from "mongoose";
 
@@ -54,10 +54,37 @@ export class HospitalsController {
   }
 
   public editItem = (req: Request, res: Response) => {
-    return res.status(200).json({data: 'edit Item works'});
+    const {hospitalId} = req.params;
+    if (!hospitalId) return res.status(400).json({error: 'Hospital code is required'});
+
+    const isValidHospitalCode = isValidObjectId(hospitalId);
+    if (!isValidHospitalCode) return res.status(400).json({error: 'Invalid Hospital Code'});
+
+    const [error, updateHospitalDto] = UpdateHospitalDto.getObjectFromJson({...req.body, user: req.body.user._id});
+    if (error) return res.status(400).json({error: error});
+
+    this.hospitalsService.updateHospital(hospitalId, updateHospitalDto!)
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      });
   }
 
   public deleteItem = (req: Request, res: Response) => {
-    return res.status(200).json({data: 'delete Item works'});
+    const {hospitalId} = req.params;
+    if (!hospitalId) return res.status(400).json({error: 'Hospital code is required'});
+
+    const isValidHospitalCode = isValidObjectId(hospitalId);
+    if (!isValidHospitalCode) return res.status(400).json({error: 'Invalid Hospital Code'});
+
+    this.hospitalsService.deleteHospital(hospitalId)
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(error => {
+        this.handleError(error, res);
+      });
   }
 }

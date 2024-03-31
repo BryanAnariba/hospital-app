@@ -1,5 +1,5 @@
 import { doctorModel } from "../../data/models";
-import { CreateDoctorDto, PaginationDto } from "../../domain/dto";
+import { CreateDoctorDto, PaginationDto, UpdateDoctorDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
 import { UserService } from "../users/users.service";
 
@@ -50,6 +50,26 @@ export class DoctorsService {
       const newDoctor = await doctorModel.create(createDoctorDto);
       return newDoctor;
     } catch (error) {
+      throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
+    }
+  }
+
+  public async updateDoctor (doctorId: string, updateDoctorDto: UpdateDoctorDto) {
+    try {
+      const updated = await doctorModel.findOneAndUpdate({_id: doctorId}, updateDoctorDto, {new: true});
+      return updated;
+    } catch (error) {
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
+    }
+  }
+
+  public async deleteDoctor (doctorId: string) {
+    try {
+      const deleted = await doctorModel.findOneAndUpdate({_id: doctorId}, {isActive: false}, {new: true});
+      return deleted;
+    } catch (error) {
+      if (error instanceof CustomError) throw error;
       throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
     }
   }
