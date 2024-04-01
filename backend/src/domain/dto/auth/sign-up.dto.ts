@@ -5,7 +5,6 @@ export class SignUpDto {
     public readonly name: string,
     public readonly email: string,
     public readonly password: string,
-    public readonly role: string,
     public readonly img: string,
     public readonly google: boolean,
   ) {}
@@ -21,8 +20,6 @@ export class SignUpDto {
 
     if (!password || password.trim().length === 0) return ['Password is required', undefined];
 
-    if (!role || role.trim().length === 0) return ['Role is required', undefined];
-
-    return [undefined, new SignUpDto(name, email, password, role, img, google)];
+    return [undefined, new SignUpDto(name, email, password, img, google)];
   }
 }

@@ -35,8 +35,8 @@ export class AuthController {
     const [error, signUpDto] = SignUpDto.getObjectFromJson(req.body);
     if (error) return res.status(400).json({error: error});
 
-    const isValidRoleId = isValidObjectId(signUpDto?.role);
-    if (!isValidRoleId) return res.status(400).json({error: 'Invalid role code'});
+    // const isValidRoleId = isValidObjectId(signUpDto?.role);
+    // if (!isValidRoleId) return res.status(400).json({error: 'Invalid role code'});
 
     this.authService.onSignUp(signUpDto!)
       .then(data => {

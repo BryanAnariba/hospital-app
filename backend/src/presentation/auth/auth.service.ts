@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Bcrypt, JWT, environmentVars } from "../../config";
 import { userModel } from "../../data/models";
 import { SignInDto, SignUpDto } from "../../domain/dto";
@@ -85,14 +86,32 @@ export class AuthService {
   }
 
   public async onSignUp(signUpDto: SignUpDto) {
+    const roleService = new RoleService();
     const userService = new UserService();
-    const newUser = await userService.createUser(signUpDto);
+
+    const existsUser = await userService.getUserByEmail(signUpDto.email);
+    if (existsUser) throw CustomError.badErrorRequest(`The user ${signUpDto.email} already exists`);
+    
+    const role = await roleService.getRoleByName("USER");
+    if (!role) throw CustomError.badErrorRequest(`The role USER does not exists`);
+
+    const user  = new userModel({
+      name: signUpDto.name,
+      email: signUpDto.email,
+      role: role._id,
+      img: signUpDto.img,
+      password: Bcrypt.hashPassword(signUpDto.password),
+      google: true,
+    });
+    const {password, ...restOfUser} = user.toJSON();
+
     try {
+      await user.save();
       const jwt = new JWT({ jwtSeed: environmentVars.JWT_SEED });
-      const token = await jwt.genToken({ _id: `${newUser._id}` });
+      const token = await jwt.genToken({ _id: `${restOfUser._id}` });
       return {
         token: token,
-        user: newUser,
+        user: restOfUser,
       };
     } catch (error) {
       throw CustomError.internalServerErrorRequest(
