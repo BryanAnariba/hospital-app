@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Bcrypt, JWT, environmentVars } from "../../config";
 import { userModel } from "../../data/models";
 import { SignInDto, SignUpDto } from "../../domain/dto";

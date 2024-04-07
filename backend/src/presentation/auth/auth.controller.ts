@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import { SignInDto, SignUpDto } from "../../domain/dto";
 import { CustomError } from "../../domain/error/custom.error";
-import { isValidObjectId } from "mongoose";
 import { verifyGoogleSignIn } from "../../config";
 
 export class AuthController {
