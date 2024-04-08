@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignIn, SignInResponse, SignUp, SignUpResponse, User } from '../interfaces';
 import { environment } from '../../../environments/enviornments';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { SignIn, SignInResponse, SignUp, SignUpResponse } from '../interfaces';
+import { User } from '../../models';
 
 declare const google: any;
-declare const gapi: any;
 
 const baseUrl: string = environment.base_url;
 
@@ -18,6 +18,8 @@ export interface TokenInfo {
   providedIn: 'root'
 })
 export class AuthService {
+
+  public loggedUser?: User;
 
   constructor(private http: HttpClient) {}
 
@@ -62,6 +64,7 @@ export class AuthService {
   
   //  Si el token encontrado coincide y es valido lo renovamos, esto actua como un refresh token
   public verifyAndRefreshToken (): Observable<boolean> {
+    console.log('Refreshing token!');
     const tokenInfo = (localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')!) : {} as TokenInfo;
     return this.http.get<SignInResponse>(`${baseUrl}/auth/verify-refresh-token`, {
       headers: {
@@ -69,10 +72,13 @@ export class AuthService {
       },
     })
       .pipe(
-        tap(data => { // renovamos token si llegamos aqui
+        map( data => {
           this.saveInLocalStorage({token: data.token, email: data.user.email});
+          const {name, email, img = '', role, google, isActive, createdAt, updatedAt,_id} = data.user;
+          this.loggedUser = new User(name, email, img, role, google, isActive, createdAt, updatedAt, _id);
+          // console.log(this.loggedUser.printData());
+          return true ;
         }),
-        map( data => true ),
         catchError( error => of(false)  ),
       );
   }

@@ -8,12 +8,13 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { isNotLoggedGuard } from '../auth/guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: PagesComponent,
     canActivate: [isNotLoggedGuard],
+    component: PagesComponent,
     children: [
       {
         path: '',
@@ -56,6 +57,13 @@ const routes: Routes = [
         data: {
           title: 'Observables',
         },
+      },
+      {
+        path: 'my-profile',
+        component: ProfileComponent,
+        data: {
+          title: 'My Profile',
+        }
       },
     ],
   },

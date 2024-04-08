@@ -8,4 +8,7 @@ export interface User {
   role: Role;
   google: boolean;
   isActive: boolean;
+  password?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

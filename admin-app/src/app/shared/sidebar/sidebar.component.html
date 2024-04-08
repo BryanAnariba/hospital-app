@@ -9,17 +9,18 @@
             class="has-arrow waves-effect waves-dark"
             href="#"
             aria-expanded="false"
-            ><img src="./assets/images/users/profile.png" alt="user" /><span
+            ><img [src]="imgUrl" [alt]="name" /><span
               class="hide-menu"
-              >Steave Jobs
+              >
+              {{name}}
             </span></a
           >
           <ul aria-expanded="false" class="collapse">
-            <li><a href="javascript:void()">My Profile </a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/dashboard/my-profile']" routerLinkActive="active">My Profile </a></li>
             <li><a href="javascript:void()">My Balance</a></li>
             <li><a href="javascript:void()">Inbox</a></li>
-            <li><a class="cursor-pointer" [routerLink]="['/dashboard/account-settings']" >Account Setting</a></li>
-            <li><a class="cursor-pointer" [routerLink]="['/auth/sign-in']">Logout</a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/dashboard/account-settings']" routerLinkActive="active" >Account Setting</a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/auth/sign-in']" routerLinkActive="active" >Logout</a></li>
           </ul>
         </li>
         <li class="nav-devider"></li>

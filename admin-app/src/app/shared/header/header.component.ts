@@ -9,10 +9,19 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
+  public imgUrl: string = '';
+  public name: string = '';
+  public email: string = '';
+
   constructor (
     private readonly authService: AuthService, 
     private readonly router: Router,
-  ) {}
+  ) {
+    // console.log({img: this.authService.loggedUser!.imgUrl});
+    this.imgUrl = this.authService.loggedUser!.imgUrl;
+    this.name = this.authService.loggedUser!.name;
+    this.email = this.authService.loggedUser!.email;
+  }
 
   public logOut() {
     this.authService.removeDataInLocalStorage();

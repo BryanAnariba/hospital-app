@@ -120,10 +120,14 @@ export class AuthService {
   }
 
   public async refreshToken(id: string) {
+    const userService = new UserService();
     try {
       const jwt = new JWT({ jwtSeed: environmentVars.JWT_SEED });
-      const token = await jwt.genToken({ _id: id });
-      return token;
+      const [token, user] = await Promise.all([
+        jwt.genToken({ _id: id }),
+        userService.getUser(id)
+      ]);
+      return {token, user};
     } catch (error) { 
       throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
     }

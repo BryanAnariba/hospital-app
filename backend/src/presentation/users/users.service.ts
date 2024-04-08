@@ -74,7 +74,7 @@ export class UserService {
 
   public async getUser(userId: string) {
     try {
-      return await userModel.findOne({_id: userId});
+      return await userModel.findOne({_id: userId}, {password: false}).populate('role', 'name description');
     } catch (error) {
       throw CustomError.internalServerErrorRequest(`Sometime when wrong ${error}`);
     }

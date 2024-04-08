@@ -1,4 +1,4 @@
-import { Role } from "../../models";
+import { Role } from "../../interfaces";
 
 export interface SignUpResponse {
   token: string;

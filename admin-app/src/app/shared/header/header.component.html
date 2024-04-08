@@ -553,7 +553,7 @@
             aria-haspopup="true"
             aria-expanded="false"
             ><img
-              src="./assets/images/users/1.jpg"
+              [src]="imgUrl"
               alt="user"
               class="profile-pic"
           /></a>
@@ -562,11 +562,11 @@
               <li>
                 <div class="dw-user-box">
                   <div class="u-img">
-                    <img src="./assets/images/users/1.jpg" alt="user" />
+                    <img [src]="imgUrl" [alt]="name" />
                   </div>
                   <div class="u-text">
-                    <h4>Steave Jobs</h4>
-                    <p class="text-muted">varungmail.com</p>
+                    <h4>{{name}}</h4>
+                    <p class="text-muted">{{email | slice:0:20 }} {{email.length > 20 ? '...' : ''}}</p>
                     <a
                       href="pages-profile.html"
                       class="btn btn-rounded btn-danger btn-sm"

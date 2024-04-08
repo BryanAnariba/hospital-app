@@ -69,12 +69,10 @@ export class AuthController {
     const {user} = req.body;
     if (!user) return res.status(401).json({error: 'Invalid Authentication'});
 
+    // POR QUE NO AGARRO EL USUARIO DE LA REQ.BODY: pues por que el usuario en cualquier momento puede cambiar su imagen y quedaria con la imagen anterior
     this.authService.refreshToken(user._id)
       .then(data => {
-        return res.status(200).json({
-          token: data,
-          user: user,
-        });
+        return res.status(200).json(data);
       })
       .catch(error => {
         this.handleError(error, res);

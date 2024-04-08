@@ -17,7 +17,7 @@ export class UploadsRoutes {
     */
     router.use(expressFileUpload());
     router.post('/:type/:id', [AuthMiddleware.validateJWT], uploadsController.uploadFile);
-    router.get('/:type/:img', [AuthMiddleware.validateJWT], uploadsController.getUploadFiles);
+    router.get('/:type/:img', [/*AuthMiddleware.validateJWT*/], uploadsController.getUploadFiles);
 
     return router;
   }
