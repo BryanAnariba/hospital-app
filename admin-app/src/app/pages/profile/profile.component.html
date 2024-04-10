@@ -2,15 +2,15 @@
   <div class="col-lg-6 col-sm-12 mx-auto">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Sample Horizontal Form with Icons</h4>
-        <h6 class="card-subtitle">Use Bootstrap's predefined grid classes for horizontal form</h6>
-        <form class="form-horizontal p-t-20">
+        <h4 class="card-title">User Profile Data</h4>
+        <h6 class="card-subtitle">You Can edit your info here!</h6>
+        <form class="form-horizontal p-t-20" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
           <div class="form-group row">
             <label for="exampleInputuname3" class="col-sm-3 control-label">Username*</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon"><i class="ti-user"></i></div>
-                <input type="text" class="form-control" id="exampleInputuname3" placeholder="Username">
+                <input type="text" class="form-control" id="name" placeholder="Username" formControlName="name">
               </div>
             </div>
           </div>
@@ -19,48 +19,24 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon"><i class="ti-email"></i></div>
-                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email" [readOnly]="user.google">
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label for="web" class="col-sm-3 control-label">Website</label>
+            <label for="web" class="col-sm-3 control-label">Role</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon"><i class="ti-world"></i></div>
-                <input type="text" class="form-control" id="web" placeholder="Enter Website Name">
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="inputPassword4" class="col-sm-3 control-label">Password*</label>
-            <div class="col-sm-9">
-              <div class="input-group">
-                <div class="input-group-addon"><i class="ti-lock"></i></div>
-                <input type="password" class="form-control" id="exampleInputpwd4" placeholder="Enter pwd">
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="inputPassword5" class="col-sm-3 control-label">Re Password*</label>
-            <div class="col-sm-9">
-              <div class="input-group">
-                <div class="input-group-addon"><i class="ti-lock"></i></div>
-                <input type="password" class="form-control" id="exampleInputpwd5" placeholder="Re Enter pwd">
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="offset-sm-3 col-sm-9">
-              <div class="checkbox checkbox-success">
-                <input id="checkbox33" type="checkbox">
-                <label for="checkbox33">Check me out !</label>
+                <select name="role" id="role" class="form-control" formControlName="role">
+                  <option [value]="role._id" *ngFor="let role of roles">{{role.name}}</option>
+                </select>
               </div>
             </div>
           </div>
           <div class="form-group row m-b-0">
             <div class="col">
-              <button type="submit" class="btn btn-success btn-block waves-effect waves-light">
+              <button type="submit" class="btn btn-success btn-block waves-effect waves-light" [disabled]="profileForm.invalid">
                 <i class="fa fa-save"></i>
                 Save
               </button>
@@ -76,18 +52,19 @@
         <h4 class="card-title">Avatar</h4>
         <h4 class="card-subtitle">Image</h4>
 
-        
-      <img src="" alt="">
+        <div class="img-container text-center">
+          <img *ngIf="!imageTemporal" [src]="user.imgUrl" [alt]="user.name" class="img-avatar">
+          <img  *ngIf="imageTemporal" [src]="imageTemporal" [alt]="user.name" class="img-avatar">        
+        </div>
+        <input type="file" name="" id="" (change)="onChangeImg($event)">
 
-      <input type="file" name="" id="">
-
-      <br>
-      <br>
-      <hr>
-      <button type="button" class="btn btn-success btn-block waves-effect waves-light">
-        <i class="fa fa-save"></i>
-        Save Image
-      </button>
+        <br>
+        <br>
+        <hr>
+        <button type="button" class="btn btn-success btn-block waves-effect waves-light" (click)="uploadUserImage()">
+          <i class="fa fa-save"></i>
+          Save Image
+        </button>
       </div>
     </div>
   </div>

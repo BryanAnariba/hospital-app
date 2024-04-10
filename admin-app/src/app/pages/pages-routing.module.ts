@@ -65,6 +65,13 @@ const routes: Routes = [
           title: 'My Profile',
         }
       },
+      {
+        path: 'roles',
+        component: ProfileComponent,
+        data: {
+          title: 'Roles',
+        }
+      },
     ],
   },
 ];

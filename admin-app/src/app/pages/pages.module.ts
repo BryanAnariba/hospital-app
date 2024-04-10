@@ -13,6 +13,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RolePageComponent } from './role-page/role-page.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import { ProfileComponent } from './profile/profile.component';
     AccountSettingsComponent,
     PromisesComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    RolePageComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     PagesRoutingModule,
     SharedModule,
     ComponentsModule,

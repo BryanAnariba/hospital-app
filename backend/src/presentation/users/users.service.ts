@@ -61,12 +61,32 @@ export class UserService {
       if (existsEmailInOtherAccount) throw CustomError.badErrorRequest(`The email ${updateUserDto.email} already exists in Hospital App`);
     }
 
+    if (existsUser.google && existsUser.email !== updateUserDto.email) {
+      throw CustomError.badErrorRequest(`Google User cannot updated the email`);
+    }
+
     try {
-      return await userModel.findOneAndUpdate(
-        {_id: updateUserDto.id}, 
-        updateUserDto, 
-        { new: true }
-      );
+      let userUpdated;
+      if (existsUser.google) {
+        userUpdated = await userModel.findOneAndUpdate(
+          {_id: updateUserDto.id}, 
+          {
+            name: updateUserDto.name,
+            role: updateUserDto.role
+          }, 
+          { new: true }
+        );
+      } else {
+        userUpdated = await userModel.findOneAndUpdate(
+          {_id: updateUserDto.id}, 
+          updateUserDto, 
+          { new: true }
+        );
+      }
+
+      
+      const {password, ...restOfUser} = userUpdated!.toJSON();
+      return restOfUser;
     } catch (error) {
       throw CustomError.internalServerErrorRequest(`Sometime went wrong ${error}`);
     }

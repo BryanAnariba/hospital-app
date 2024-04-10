@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Menu, SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../auth/services/auth.service';
+import { User } from '../../models';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,13 +11,11 @@ import { AuthService } from '../../auth/services/auth.service';
 export class SidebarComponent {
 
   public menuItem: Menu[] = [];
-  public imgUrl: string ='';
-  public name: string = '';
+  public user: User;
 
   constructor (private readonly sidebarService: SidebarService, private authService: AuthService) {
     this.menuItem = sidebarService.menu;
-    this.imgUrl = this.authService.loggedUser!.imgUrl;
-    this.name = this.authService.loggedUser!.name;
+    this.user = this.authService.loggedUser;
   }
 
 }

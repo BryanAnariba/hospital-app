@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: 'auth/sign-in',
     component: SignInPageComponent,
-    canActivate: [isLoggedGuard]
+    // canActivate: [isLoggedGuard]
   },
   {
     path: 'auth/sign-up',
     component: SignUpPageComponent,
-    canActivate: [isLoggedGuard]
+    // canActivate: [isLoggedGuard]
   }
 ];
 

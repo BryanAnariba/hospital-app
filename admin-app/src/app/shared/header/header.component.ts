@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../../models';
 
 @Component({
   selector: 'app-header',
@@ -8,19 +9,13 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
-  public imgUrl: string = '';
-  public name: string = '';
-  public email: string = '';
+  public user!: User;
 
   constructor (
     private readonly authService: AuthService, 
     private readonly router: Router,
   ) {
-    // console.log({img: this.authService.loggedUser!.imgUrl});
-    this.imgUrl = this.authService.loggedUser!.imgUrl;
-    this.name = this.authService.loggedUser!.name;
-    this.email = this.authService.loggedUser!.email;
+    this.user = this.authService.loggedUser;
   }
 
   public logOut() {

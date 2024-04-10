@@ -19,9 +19,13 @@ export interface TokenInfo {
 })
 export class AuthService {
 
-  public loggedUser?: User;
+  public loggedUser!: User;
 
   constructor(private http: HttpClient) {}
+
+  get userId (): string {
+    return `${this.loggedUser?._id}`;
+  }
 
   public signUp (formData: SignUp): Observable<SignUpResponse> {
     return this.http.post<SignUpResponse>(`${baseUrl}/auth/sign-up`, formData)
@@ -81,6 +85,11 @@ export class AuthService {
         }),
         catchError( error => of(false)  ),
       );
+  }
+
+  get token(): string {
+    const tokenInfo = (localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')!) as TokenInfo : {token: '', email: ''} ;
+    return tokenInfo.token;
   }
 
 }
