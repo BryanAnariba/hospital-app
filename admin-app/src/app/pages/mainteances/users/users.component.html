@@ -1,0 +1,97 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search User" 
+          (keyup)="onKeyPress(termToSearch.value)"
+          #termToSearch 
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Loading</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p>Please Wait!</p>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+  <div class="col-12">
+    <div class="card p-3">
+      <div class="card-body">
+        <h4 class="card-title">Total Users: {{totalUsers}} - Skip {{skip}}</h4>
+        <h6 class="card-subtitle">Registered users in App.</h6>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100">Avatar</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th class="w140">Role</th>
+                <th class="w100">Auth</th>
+                <th class="text-nowrap w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td class="text-center">
+                  <img [src]="user.imgUrl" [alt]="user.email + ' Image'" class="avatar">
+                </td>
+                <td>{{user.email}}</td>
+                <td>{{user.name}}</td>
+                <td>
+                  <select #newRole (change)="onChangeRole(user, newRole.value)" class="form-control">
+                    <option 
+                      [value]="role._id" 
+                      [selected]="role._id === user.role._id"
+                      *ngFor="let role of roles" 
+                    >
+                      {{role.name}}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <span class="label label-danger" *ngIf="user.google">Google</span>
+                  &nbsp;
+                  <span class="label label-info" *ngIf="!user.google">Email</span>
+                </td>
+                <td class="text-nowrap text-center">
+                  <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i
+                    class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                  <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Close"
+                    class="pointer"
+                    (click)="onDeleteUser(user)"
+                    > 
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="alert alert-info text-center" role="alert" *ngIf="users.length === 0">
+          <h4 class="alert-heading">Not Records Found</h4>
+        </div>
+      </div>
+      <div class="mx-auto" *ngIf="termToSearch.value.length === 0">
+        <button class="btn btn-secondary" (click)="changeSkip(-1)" [disabled]="skip === 1">Previus</button>
+          &nbsp;
+          <button class="btn btn-secondary" (click)="changeSkip(+1)" [disabled]="users.length < limit">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

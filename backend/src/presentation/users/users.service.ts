@@ -32,7 +32,7 @@ export class UserService {
 
   public async getUsers (paginationDto: PaginationDto) {
     const [users, totalUsers] = await Promise.all([
-      userModel.find({isActive: true}, {password: false}).skip((paginationDto.skip - 1) * paginationDto.limit).limit(paginationDto.limit),
+      userModel.find({isActive: true}, {password: false}).populate('role', 'name').skip((paginationDto.skip - 1) * paginationDto.limit).limit(paginationDto.limit),
       userModel.countDocuments({isActive: true}),
     ]);
 

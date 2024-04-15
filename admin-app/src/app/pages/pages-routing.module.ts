@@ -9,6 +9,7 @@ import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { isNotLoggedGuard } from '../auth/guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './mainteances/users/users.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,13 @@ const routes: Routes = [
         data: {
           title: 'Roles',
         }
+      }, // -------------------------- MANTENIMIENTOS ---------------------------
+      {
+        path: 'users',
+        component: UsersComponent,
+        data: {
+          title: 'Users of Hospital App'
+        },
       },
     ],
   },

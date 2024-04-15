@@ -92,4 +92,12 @@ export class AuthService {
     return tokenInfo.token;
   }
 
+  get headers() {
+    return {
+      headers: {
+        'x-access-token': `Bearer ${this.token}`,
+      },
+    }
+  }
+
 }

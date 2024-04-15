@@ -100,7 +100,7 @@ export class AuthService {
       role: role._id,
       img: signUpDto.img,
       password: Bcrypt.hashPassword(signUpDto.password),
-      google: true,
+      google: false,
     });
     const {password, ...restOfUser} = user.toJSON();
 

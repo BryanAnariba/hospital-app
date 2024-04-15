@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IncrementatorComponent } from './incrementator/incrementator.component';
 import { FormsModule } from '@angular/forms';
+import { ModalImgComponent } from './modal-img/modal-img.component';
 
 @NgModule({
   declarations: [
-    IncrementatorComponent
+    IncrementatorComponent,
+    ModalImgComponent
   ],
   imports: [
     CommonModule,
@@ -13,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     IncrementatorComponent,
+    ModalImgComponent,
   ]
 })
 export class ComponentsModule { }
