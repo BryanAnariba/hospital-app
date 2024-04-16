@@ -22,10 +22,6 @@ export class FileUploadService {
   public updatePhoto (file: File, type: typeOfImg, id: string): Observable<User> {
     const formData = new FormData();
     formData.append('image', file);
-    return this.httpClient.post<User>(`${baseUrl}/uploads/${type}/${id}`, formData, {
-      headers: {
-        'x-access-token': `Bearer ${this.authService.token}`,
-      }
-    });
+    return this.httpClient.post<User>(`${baseUrl}/uploads/${type}/${id}`, formData, this.authService.headers);
   }
 }

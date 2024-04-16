@@ -3,11 +3,13 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../models';
 import { SearchByService } from '../../../services/search-by.service';
 import { searchByType } from '../../../enums/search.enums';
-import { Subject, Subscription, debounceTime } from 'rxjs';
+import { Subject, Subscription, debounceTime, delay } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../auth/services/auth.service';
 import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../interfaces';
+import { ModalImgService } from '../../../services/modal-img.service';
+import { typeOfImg } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'app-users',
@@ -30,12 +32,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   private debouncer: Subject<string> = new Subject<string>();
   private debouncerSubscription?: Subscription;
+  private imageUploadedSubscription?: Subscription;
 
   constructor(
     private readonly userService: UserService,
     private readonly searchByService: SearchByService,
     private readonly authService: AuthService,
     private readonly roleService: RoleService,
+    private readonly modalImgService: ModalImgService,
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +53,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         this.searchByTerm(value);
       });
+
+    // CUANDO SE CAMBIA UNA IMAGEN
+    this.imageUploadedSubscription = this.modalImgService.imageUploaded
+      .pipe(
+        delay(100),
+      )
+      .subscribe(img => this.loadUsers());
   }
 
   ngOnDestroy(): void {
     this.debouncerSubscription?.unsubscribe();
+    this.imageUploadedSubscription?.unsubscribe;
   }
 
   public changeSkip(value: number) {
@@ -133,7 +145,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (data: any) => {
         Swal.fire({
-          title: 'Deleted!',
+          title: 'Success!',
           text: `User ${data.email} role updated!`,
           icon: 'success',
         });
@@ -143,6 +155,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         Swal.fire('Error', error.error.error, 'error');
       },
     });
+  }
+
+  public openModal(user: User) {
+    // console.log(user);
+    this.modalImgService.openModal(typeOfImg.USERS, user._id!, user.img);
   }
 
   public onKeyPress(term: string) {
