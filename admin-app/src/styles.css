@@ -33,3 +33,7 @@
 .hide {
   display: none;
 }
+
+.vertical-centering {
+  align-items: center;
+}

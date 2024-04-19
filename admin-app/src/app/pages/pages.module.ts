@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RolePageComponent } from './role-page/role-page.component';
 import { UsersComponent } from './mainteances/users/users.component';
 import { DoctorsComponent } from './mainteances/doctors/doctors.component';
+import { HospitalsComponent } from './mainteances/hospitals/hospitals.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DoctorsComponent } from './mainteances/doctors/doctors.component';
     ProfileComponent,
     RolePageComponent,
     UsersComponent,
-    DoctorsComponent
+    DoctorsComponent,
+    HospitalsComponent
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { isNotLoggedGuard } from '../auth/guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './mainteances/users/users.component';
+import { HospitalsComponent } from './mainteances/hospitals/hospitals.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,13 @@ const routes: Routes = [
         data: {
           title: 'Users of Hospital App'
         },
+      },
+      {
+        path: 'hospitals',
+        component: HospitalsComponent,
+        data: {
+          title: 'Hospitals in App'
+        }
       },
     ],
   },

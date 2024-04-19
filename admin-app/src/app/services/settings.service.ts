@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
   private linkTheme = document.querySelector('#theme');
-    public url: string = '';
+  public url: string = '';
 
   constructor() {
-    this.url = (localStorage.getItem('theme')) ? localStorage.getItem('theme')!! : './assets/css/colors/default-dark.css';
+    this.url = localStorage.getItem('theme')
+      ? localStorage.getItem('theme')!!
+      : './assets/css/colors/default-dark.css';
     this.linkTheme?.setAttribute('href', this.url);
   }
 
@@ -19,7 +21,7 @@ export class SettingsService {
     this.checkCurrentTheme();
   }
 
-  public checkCurrentTheme (): void {
+  public checkCurrentTheme(): void {
     const links: NodeListOf<Element> = document.querySelectorAll('.selector');
     links.forEach((link: Element) => {
       // Borramos la clase

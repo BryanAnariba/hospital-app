@@ -1,0 +1,80 @@
+<div class="row animated fadeIn">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input type="text" class="form-control" placeholder="Search Hospital" #hospitalName (keyup)="onKeyPress(hospitalName.value)">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row animated fadeIn" *ngIf="isLoading">
+    <div class="col-12">
+      <div class="alert alert-info text-center" role="alert">
+        <h4 class="alert-heading">Loading</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p>Please Wait!</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row animated fadeIn" *ngIf="!isLoading">
+    <div class="col-12">
+      <div class="card p-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8">
+              <h4 class="card-title">Hospitals Mainteance</h4>
+              <h6 class="card-subtitle">Total Hospitals: ({{hospitals.length}}).</h6>
+            </div>
+            <div class="col-4">
+              <div class="text-right">
+                <button class="btn btn-primary">
+                  <i class="fa fa-hospital-o"></i>
+                  New Hospital
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Avatar</th>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th class="text-nowrap">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let hospital of hospitals" class="my-auto">
+                  <td class="text-center">
+                    <img [src]="hospital.img | loadImage:hospitalType" alt="hospital avatar" class="avatar">
+                  </td>
+                  <td>
+                    <input type="text" name="name" id="name" class="form-control" [value]="hospital.email"/>  
+                  </td>
+                  <td>
+                    <input type="text" name="name" id="name" class="form-control" [value]="hospital.name"/>
+                  </td>
+                  <td class="text-nowrap text-center vertical-centering">
+                    <a href="#" data-toggle="tooltip" data-original-title="Save Changes"> 
+                      <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-original-title="Delete Hospital"> 
+                      <i class="fa fa-close text-danger"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="mx-auto">
+          <button class="btn btn-secondary" (click)="loadHospitalsUsingPagination(-1)" [disabled]="skip === 1">Previus</button>
+            &nbsp;
+            <button class="btn btn-secondary" (click)="loadHospitalsUsingPagination(1)" [disabled]="this.hospitals.length < this.limit">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>

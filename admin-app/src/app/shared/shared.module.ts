@@ -4,12 +4,14 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
+import { LoadImagePipe } from './pipes/load-image.pipe';
 
 @NgModule({
   declarations: [
     BreadcrumbsComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoadImagePipe
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { RouterModule } from '@angular/router';
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
+    LoadImagePipe,
   ]
 })
 export class SharedModule { }

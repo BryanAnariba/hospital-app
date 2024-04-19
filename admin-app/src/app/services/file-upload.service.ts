@@ -7,21 +7,31 @@ import { User } from '../interfaces';
 
 const baseUrl: string = environment.base_url;
 export enum typeOfImg {
-  HOSPITALS = 'hospitals', 
-  USERS = 'users', 
-  DOCTORS = 'doctors'
+  HOSPITALS = 'hospitals',
+  USERS = 'users',
+  DOCTORS = 'doctors',
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FileUploadService {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly authService: AuthService
+  ) {}
 
-  constructor(private readonly httpClient: HttpClient,private readonly authService: AuthService) { }
-
-  public updatePhoto (file: File, type: typeOfImg, id: string): Observable<User> {
+  public updatePhoto(
+    file: File,
+    type: typeOfImg,
+    id: string
+  ): Observable<User> {
     const formData = new FormData();
     formData.append('image', file);
-    return this.httpClient.post<User>(`${baseUrl}/uploads/${type}/${id}`, formData, this.authService.headers);
+    return this.httpClient.post<User>(
+      `${baseUrl}/uploads/${type}/${id}`,
+      formData,
+      this.authService.headers
+    );
   }
 }

@@ -12,10 +12,9 @@ export interface SubMenu {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SidebarService {
-
   menu: Menu[] = [
     {
       title: 'Dashboard',
@@ -24,9 +23,9 @@ export class SidebarService {
         { title: 'Main', url: '/' },
         { title: 'Progress Bar', url: '/dashboard/progress' },
         { title: 'Graphics', url: '/dashboard/graphics' },
-        { title: 'Promises', url: '/dashboard/promises'},
+        { title: 'Promises', url: '/dashboard/promises' },
         { title: 'RXJS', url: '/dashboard/rxjs' },
-      ]
+      ],
     },
     {
       title: 'Mainteances',
@@ -34,10 +33,10 @@ export class SidebarService {
       subMenu: [
         { title: 'Users', url: 'users' },
         { title: 'Doctors', url: 'doctors' },
-        { title: 'Hospitals', url: 'hospitals'},
-      ]
-    }
-  ]
+        { title: 'Hospitals', url: 'hospitals' },
+      ],
+    },
+  ];
 
-  constructor() { }
+  constructor() {}
 }

@@ -1,23 +1,33 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService, TokenInfo } from '../services/auth.service';
 import { tap } from 'rxjs';
 
-export const isNotLoggedGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const isNotLoggedGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
   const userService = inject(AuthService);
   const router = inject(Router);
 
-  return userService.verifyAndRefreshToken()
-    .pipe(
-      tap((isAuthenticatedAndnEWTokenValid) => {
-        if (!isAuthenticatedAndnEWTokenValid) {
-          router.navigate(['/auth/sign-in'])
-        }
-      }),
-    );
+  return userService.verifyAndRefreshToken().pipe(
+    tap((isAuthenticatedAndnEWTokenValid) => {
+      if (!isAuthenticatedAndnEWTokenValid) {
+        router.navigate(['/auth/sign-in']);
+      }
+    })
+  );
 };
 
-export const isLoggedGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const isLoggedGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
   const router = inject(Router);
 
   if (localStorage.getItem('token')) {
@@ -30,4 +40,4 @@ export const isLoggedGuard: CanActivateFn = (route: ActivatedRouteSnapshot, stat
   } else {
     return true;
   }
-}
+};
