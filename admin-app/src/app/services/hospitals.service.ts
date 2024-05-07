@@ -37,7 +37,7 @@ export class HospitalsService {
             limit: data.limit,
             hospitals: data.hospitals.map(
               (h) =>
-                new Hospital(h._id, h.email, h.name, h.isActive, h.user, h.img)
+                new Hospital(h._id, h.name, h.email, h.isActive, h.user, h.img)
             ),
           };
         })
@@ -46,11 +46,12 @@ export class HospitalsService {
 
   public createNewHospital(
     name: string,
-    email: string
+    email: string,
+    user: string,
   ): Observable<HospitalResponse> {
     return this.httpClient.post<HospitalResponse>(
       `${environment.base_url}/hospitals`,
-      { name: name, email: email },
+      { name: name, email: email, user: user },
       this.authService.headers
     );
   }
@@ -58,11 +59,12 @@ export class HospitalsService {
   public updateHospital(
     _id: string,
     name: string,
-    email: string
+    email: string,
+    user: string,
   ): Observable<HospitalResponse> {
     return this.httpClient.put<HospitalResponse>(
       `${environment.base_url}/hospitals/${_id}`,
-      { name: name, email: email },
+      { name: name, email: email, user: user },
       this.authService.headers
     );
   }

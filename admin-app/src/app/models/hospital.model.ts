@@ -7,6 +7,6 @@ export class Hospital {
         public email: string,
         public isActive: boolean,
         public userCreatedHospital: UserCreatedHospital,
-        public img?: string,
+        public img: string,
     ) {}
 }

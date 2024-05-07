@@ -29,7 +29,7 @@
             </div>
             <div class="col-4">
               <div class="text-right">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" (click)="getHospitalData()">
                   <i class="fa fa-hospital-o"></i>
                   New Hospital
                 </button>
@@ -41,27 +41,37 @@
               <thead>
                 <tr>
                   <th>Avatar</th>
-                  <th>Email</th>
                   <th>Name</th>
-                  <th class="text-nowrap">Actions</th>
+                  <th>Email</th>
+                  <th class="text-nowrap w100">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let hospital of hospitals" class="my-auto">
                   <td class="text-center">
-                    <img [src]="hospital.img | loadImage:hospitalType" alt="hospital avatar" class="avatar">
+                    <img [src]="hospital.img | loadImage:hospitalType" alt="hospital avatar" class="avatar" (click)="openModal(hospital)">
                   </td>
                   <td>
-                    <input type="text" name="name" id="name" class="form-control" [value]="hospital.email"/>  
+                    <input type="text" name="name" id="name" class="form-control" [(ngModel)]="hospital.name"/>  
                   </td>
                   <td>
-                    <input type="text" name="name" id="name" class="form-control" [value]="hospital.name"/>
+                    <input type="text" name="name" id="name" class="form-control" [(ngModel)]="hospital.email"/>
                   </td>
                   <td class="text-nowrap text-center vertical-centering">
-                    <a href="#" data-toggle="tooltip" data-original-title="Save Changes"> 
+                    <a 
+                      class="pointer"
+                      data-toggle="tooltip" 
+                      data-original-title="Save Changes"
+                      (click) = "updateChanges(hospital)"
+                    > 
                       <i class="fa fa-pencil text-inverse m-r-10"></i> 
                     </a>
-                    <a href="#" data-toggle="tooltip" data-original-title="Delete Hospital"> 
+                    <a 
+                      class="pointer"
+                      data-toggle="tooltip" 
+                      data-original-title="Delete Hospital"
+                      (click)="deleteHospital(hospital)"
+                    > 
                       <i class="fa fa-close text-danger"></i>
                     </a>
                   </td>
